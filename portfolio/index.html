@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasir Divde - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#home" class="text-2xl font-bold text-indigo-600">Yasir Divde</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-indigo-600 transition-colors">About</a>
+                    <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition-colors">Skills</a>
+                    <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition-colors">Projects</a>
+                    <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition-colors">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Home</a>
+                <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">About</a>
+                <a href="#skills" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section -->
+    <section id="home" class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center pt-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="animate-fade-in">
+                <img 
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQG6xtXnZVu3uw/profile-displayphoto-scale_200_200/B4DZgDE7m1H0AY-/0/1752398282637?e=2147483647&v=beta&t=9A3L9LeywnbrxfS1Y5XLB7_xS8r5mriJiDPicrLt-P4" 
+                    alt="Yasir Divde" 
+                    class="w-48 h-48 rounded-full mx-auto mb-8 shadow-2xl border-4 border-white"
+                >
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                    Hi, I'm <span class="text-indigo-600">Yasir Divde</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-6">
+                  Aspiring Software Developer
+                </p>
+                <p class="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
+                    Passionate about creating innovative solutions through technology. 
+                    Currently pursuing B.E. in Information Technology at Bharati Vidyapeeth College of Engineering, Navi Mumbai.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#projects" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">About Me</h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold text-gray-900">Student & Future Technologist</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        I am currently pursuing my Bachelor of Engineering in Information Technology at 
+                        Bharati Vidyapeeth College of Engineering, Navi Mumbai. My academic journey has 
+                        equipped me with a strong foundation in programming, web development, and software engineering principles.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        I am passionate about leveraging technology to solve real-world problems and create 
+                        meaningful user experiences. Through various projects and continuous learning, I strive 
+                        to stay updated with the latest industry trends and best practices.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">Problem Solver</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Team Player</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Quick Learner</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Innovation Focused</span>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                        alt="Technology Background" 
+                        class="rounded-2xl shadow-xl"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Technical Skills</h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-4"></div>
+                <p class="text-xl text-gray-600">Technologies and tools I work with</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Programming Languages -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-code text-2xl text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Programming Languages</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Java</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full w-4/5"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Python</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">C++</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-600 h-2 rounded-full w-3/5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Development -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-globe text-2xl text-orange-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Web Development</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">HTML/CSS</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-orange-600 h-2 rounded-full w-5/6"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">JavaScript</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-600 h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">React</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full w-2/3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database & Tools -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-2xl text-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Database & Tools</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">MySQL</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Git/GitHub</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-gray-800 h-2 rounded-full w-4/5"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">VS Code</span>
+                                <div class="w-24 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full w-5/6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-4"></div>
+                <p class="text-xl text-gray-600">A showcase of my recent work and projects</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1: Exam Management Software -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-2">
+                    <img 
+                        src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                        alt="Exam Management Software" 
+                        class="w-full h-48 object-cover"
+                    >
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Exam Management Software</h3>
+                        <p class="text-gray-600 mb-4">
+                            A comprehensive exam management system that streamlines the entire examination process 
+                            from scheduling and registration to result generation and grade management for educational institutions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Java</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">MySQL</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Swing GUI</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">JDBC</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">
+                                <i class="fab fa-github mr-1"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Real Estate Listing Website -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-2">
+                    <img 
+                        src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                        alt="Real Estate Listing Website" 
+                        class="w-full h-48 object-cover"
+                    >
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Real Estate Listing Website</h3>
+                        <p class="text-gray-600 mb-4">
+                            A modern real estate platform featuring property listings, advanced search filters, 
+                            virtual tours, and agent profiles with responsive design and user-friendly interface.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">React</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Node.js</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">MongoDB</span>
+                            <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-sm">Tailwind CSS</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">
+                                <i class="fab fa-github mr-1"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Hospital Management System -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-2">
+                    <img 
+                        src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                        alt="Hospital Management System" 
+                        class="w-full h-48 object-cover"
+                    >
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Hospital Management System</h3>
+                        <p class="text-gray-600 mb-4">
+                            An integrated hospital management solution handling patient records, appointment scheduling, 
+                            staff management, billing, and inventory tracking with role-based access control.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">PHP</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">MySQL</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Bootstrap</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">JavaScript</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">
+                                <i class="fab fa-github mr-1"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Projects Section -->
+            <div class="text-center mt-16">
+                <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-all inline-flex items-center">
+                    <i class="fas fa-code mr-2"></i>
+                    View All Projects on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section class="py-20 bg-indigo-600">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="space-y-8">
+                <div class="space-y-4">
+                    <h2 class="text-4xl font-bold text-white">Download My Resume</h2>
+                    <p class="text-xl text-indigo-200 max-w-2xl mx-auto">
+                        Get a detailed overview of my skills, education, and project experience. 
+                        Available for download in PDF format.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#" download class="bg-white hover:bg-gray-100 text-indigo-600 px-8 py-4 rounded-lg font-semibold transition-all inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Resume (PDF)
+                    </a>
+                    <a href="#" class="border-2 border-white hover:bg-white hover:text-indigo-600 text-white px-8 py-4 rounded-lg font-semibold transition-all inline-flex items-center">
+                        <i class="fas fa-eye mr-2"></i>
+                        View Online
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-4"></div>
+                <p class="text-xl text-gray-600">Let's discuss opportunities and collaborations</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Email</h3>
+                                <p class="text-gray-600">yasirdivde@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Phone</h3>
+                                <p class="text-gray-600">+91 8879XXXXXX</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Location</h3>
+                                <p class="text-gray-600">Navi Mumbai, Maharashtra, India</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent outline-none transition-all" placeholder="Enter your name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent outline-none transition-all" placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent outline-none transition-all resize-none" placeholder="Your message here..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="space-y-4">
+                <h3 class="text-2xl font-bold">Yasir Divde</h3>
+                <p class="text-gray-400">Information Technology Student & Aspiring Software Developer</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8 mt-8">
+                    <p class="text-gray-400">&copy; 2025 Yasir Divde. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                navbar.classList.add('backdrop-blur-md', 'bg-white/95');
+            } else {
+                navbar.classList.remove('backdrop-blur-md', 'bg-white/95');
+            }
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
