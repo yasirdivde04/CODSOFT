@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 w-full max-w-sm">
+        <div class="mb-6">
+            <input 
+                type="text" 
+                id="display" 
+                class="w-full h-16 bg-gray-700 text-white text-right text-2xl px-4 rounded-lg border-none outline-none font-mono"
+                readonly
+                placeholder="0"
+            >
+        </div>
+        
+        <div class="grid grid-cols-4 gap-3">
+            <button onclick="clearDisplay()" class="col-span-2 h-14 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors">Clear</button>
+            <button onclick="deleteLast()" class="h-14 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-semibold transition-colors">Del</button>
+            <button onclick="appendToDisplay('/')" class="h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">÷</button>
+            
+            <button onclick="appendToDisplay('7')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">7</button>
+            <button onclick="appendToDisplay('8')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">8</button>
+            <button onclick="appendToDisplay('9')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">9</button>
+            <button onclick="appendToDisplay('*')" class="h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">×</button>
+            
+            <button onclick="appendToDisplay('4')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">4</button>
+            <button onclick="appendToDisplay('5')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">5</button>
+            <button onclick="appendToDisplay('6')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">6</button>
+            <button onclick="appendToDisplay('-')" class="h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">-</button>
+            
+            <button onclick="appendToDisplay('1')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">1</button>
+            <button onclick="appendToDisplay('2')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">2</button>
+            <button onclick="appendToDisplay('3')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">3</button>
+            <button onclick="appendToDisplay('+')" class="h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">+</button>
+            
+            <button onclick="appendToDisplay('0')" class="col-span-2 h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">0</button>
+            <button onclick="appendToDisplay('.')" class="h-14 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">.</button>
+            <button onclick="calculateResult()" class="h-14 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors">=</button>
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+let shouldResetDisplay = false;
+
+function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    
+    if (shouldResetDisplay) {
+        currentInput = '';
+        shouldResetDisplay = false;
+    }
+    
+    if (isOperator(value) && isOperator(currentInput.slice(-1))) {
+        currentInput = currentInput.slice(0, -1) + value;
+    } else {
+        currentInput += value;
+    }
+    
+    display.value = currentInput || '0';
+}
+
+function clearDisplay() {
+    currentInput = '';
+    document.getElementById('display').value = '0';
+    shouldResetDisplay = false;
+}
+
+function deleteLast() {
+    if (currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+        document.getElementById('display').value = currentInput || '0';
+    }
+}
+
+function calculateResult() {
+    const display = document.getElementById('display');
+    
+    if (currentInput === '') return;
+    
+    try {
+        let expression = currentInput;
+        let result = evaluateExpression(expression);
+        
+        if (isNaN(result) || !isFinite(result)) {
+            throw new Error('Invalid calculation');
+        }
+        
+        result = Math.round(result * 1000000000) / 1000000000;
+        
+        display.value = result.toString();
+        currentInput = result.toString();
+        shouldResetDisplay = true;
+        
+    } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+        shouldResetDisplay = true;
+    }
+}
+
+function evaluateExpression(expr) {
+    let numbers = [];
+    let operators = [];
+    let currentNumber = '';
+    
+    for (let i = 0; i < expr.length; i++) {
+        let char = expr[i];
+        
+        if (char >= '0' && char <= '9' || char === '.') {
+            currentNumber += char;
+        } else if (isOperator(char)) {
+            if (currentNumber !== '') {
+                numbers.push(parseFloat(currentNumber));
+                currentNumber = '';
+            }
+            
+            while (operators.length > 0 && 
+                   precedence(operators[operators.length - 1]) >= precedence(char)) {
+                let operator = operators.pop();
+                let b = numbers.pop();
+                let a = numbers.pop();
+                numbers.push(performOperation(a, b, operator));
+            }
+            
+            operators.push(char);
+        }
+    }
+    
+    if (currentNumber !== '') {
+        numbers.push(parseFloat(currentNumber));
+    }
+    
+    while (operators.length > 0) {
+        let operator = operators.pop();
+        let b = numbers.pop();
+        let a = numbers.pop();
+        numbers.push(performOperation(a, b, operator));
+    }
+    
+    return numbers[0];
+}
+
+function isOperator(char) {
+    return ['+', '-', '*', '/'].includes(char);
+}
+
+function precedence(operator) {
+    if (operator === '+' || operator === '-') return 1;
+    if (operator === '*' || operator === '/') return 2;
+    return 0;
+}
+
+function performOperation(a, b, operator) {
+    switch (operator) {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            if (b === 0) throw new Error('Division by zero');
+            return a / b;
+        default:
+            throw new Error('Unknown operator');
+    }
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key >= '0' && event.key <= '9') {
+        appendToDisplay(event.key);
+    } else if (['+', '-', '*', '/'].includes(event.key)) {
+        appendToDisplay(event.key);
+    } else if (event.key === '.') {
+        appendToDisplay('.');
+    } else if (event.key === 'Enter' || event.key === '=') {
+        calculateResult();
+    } else if (event.key === 'Escape') {
+        clearDisplay();
+    } else if (event.key === 'Backspace') {
+        deleteLast();
+    }
+});
+
+    </script>
+</body>
+</html>
