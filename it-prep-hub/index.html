@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>IT Prep Hub - Learn IT Skills Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --udemy-primary: #a435f0;
+            --udemy-primary-dark: #8710d8;
+            --udemy-secondary: #1c1d1f;
+            --udemy-text: #2d2f31;
+            --udemy-gray: #6a6f73;
+            --udemy-light-gray: #f7f9fa;
+            --udemy-border: #d1d7dc;
+            --udemy-success: #73aa24;
+            --udemy-rating: #f69c08;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fff;
+            margin: 0;
+            color: var(--udemy-text);
+            line-height: 1.4;
+        }
+
+        .app-container {
+            max-width: 390px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Fixed bottom margin for content */
+        .content-area {
+            flex: 1;
+            padding: 0 16px 120px 16px; /* Increased bottom padding to 120px */
+            overflow-y: auto;
+        }
+
+        .chapter-list {
+            padding: 16px 16px 100px 16px; /* Added bottom padding */
+        }
+
+        .quiz-content {
+            padding: 24px 16px 100px 16px; /* Added bottom padding */
+        }
+
+        /* Udemy-style Header */
+        .udemy-header {
+            background: #fff;
+            border-bottom: 1px solid var(--udemy-border);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .udemy-header .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--udemy-primary);
+            text-decoration: none;
+        }
+
+        .udemy-search {
+            background: var(--udemy-light-gray);
+            border: 1px solid var(--udemy-border);
+            border-radius: 50px;
+            padding: 12px 20px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .udemy-search input {
+            background: transparent;
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            color: var(--udemy-text);
+        }
+
+        .udemy-search input::placeholder {
+            color: var(--udemy-gray);
+        }
+
+        /* Course Preview Card */
+        .preview-card {
+            background: #fff;
+            border: 1px solid var(--udemy-border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .preview-video {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-button i {
+            color: var(--udemy-primary);
+            font-size: 24px;
+            margin-left: 4px;
+        }
+
+        /* Udemy-style Cards */
+        .udemy-course-card {
+            background: #fff;
+            border: 1px solid var(--udemy-border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .udemy-course-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--udemy-primary), var(--udemy-primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--udemy-rating);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .course-content {
+            padding: 16px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--udemy-secondary);
+            margin: 0 0 8px 0;
+            line-height: 1.2;
+        }
+
+        .course-instructor {
+            font-size: 12px;
+            color: var(--udemy-gray);
+            margin: 0 0 8px 0;
+        }
+
+        .course-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 8px 0;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--udemy-rating);
+        }
+
+        .students {
+            font-size: 11px;
+            color: var(--udemy-gray);
+        }
+
+        .course-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 12px 0 8px 0;
+        }
+
+        .current-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--udemy-secondary);
+        }
+
+        .original-price {
+            font-size: 14px;
+            color: var(--udemy-gray);
+            text-decoration: line-through;
+        }
+
+        .progress-section {
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e6e8eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--udemy-success);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 11px;
+            color: var(--udemy-gray);
+        }
+
+        /* Udemy-style Buttons */
+        .udemy-btn {
+            background: var(--udemy-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .udemy-btn:hover {
+            background: var(--udemy-primary-dark);
+        }
+
+        .udemy-btn-outline {
+            background: transparent;
+            color: var(--udemy-secondary);
+            border: 1px solid var(--udemy-secondary);
+        }
+
+        .udemy-btn-outline:hover {
+            background: var(--udemy-secondary);
+            color: white;
+        }
+
+        .udemy-btn-success {
+            background: var(--udemy-success);
+        }
+
+        .udemy-btn-success:hover {
+            background: #5d8f1f;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 32px 0 16px 0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--udemy-secondary);
+        }
+
+        .view-all {
+            color: var(--udemy-primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin: 16px 0;
+        }
+
+        .category-chip {
+            background: var(--udemy-light-gray);
+            border: 1px solid var(--udemy-border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--udemy-text);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-chip.active {
+            background: var(--udemy-secondary);
+            color: white;
+            border-color: var(--udemy-secondary);
+        }
+
+        .category-chip:hover {
+            border-color: var(--udemy-primary);
+        }
+
+        /* Course Learning Interface */
+        .learning-header {
+            background: var(--udemy-secondary);
+            color: white;
+            padding: 16px;
+        }
+
+        .learning-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .learning-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .course-tabs {
+            background: white;
+            border-bottom: 1px solid var(--udemy-border);
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .course-tab {
+            padding: 16px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--udemy-gray);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .course-tab.active {
+            color: var(--udemy-primary);
+            border-bottom-color: var(--udemy-primary);
+        }
+
+        /* Chapter List */
+        .chapter-item {
+            background: white;
+            border: 1px solid var(--udemy-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-item:hover {
+            border-color: var(--udemy-primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chapter-number {
+            width: 32px;
+            height: 32px;
+            background: var(--udemy-light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--udemy-text);
+        }
+
+        .chapter-number.completed {
+            background: var(--udemy-success);
+            color: white;
+        }
+
+        .chapter-info {
+            flex: 1;
+        }
+
+        .chapter-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--udemy-secondary);
+            margin: 0 0 4px 0;
+        }
+
+        .chapter-meta {
+            font-size: 12px;
+            color: var(--udemy-gray);
+        }
+
+        /* Mock Test Cards */
+        .mock-test-card {
+            background: white;
+            border: 1px solid var(--udemy-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mock-test-card:hover {
+            border-color: var(--udemy-rating);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+
+        .mock-test-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mock-test-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--udemy-rating);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .mock-test-info {
+            flex: 1;
+        }
+
+        .mock-test-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--udemy-secondary);
+            margin: 0 0 4px 0;
+        }
+
+        .mock-test-details {
+            font-size: 12px;
+            color: var(--udemy-gray);
+        }
+
+        .mock-score-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--udemy-light-gray);
+            color: var(--udemy-gray);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .mock-score-badge.completed {
+            background: var(--udemy-success);
+            color: white;
+        }
+
+        /* Video Player */
+        .video-player {
+            width: 100%;
+            height: 220px;
+            background: #000;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-playlist {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--udemy-border);
+            border-radius: 8px;
+            background: white;
+        }
+
+        .playlist-item {
+            padding: 12px;
+            border-bottom: 1px solid var(--udemy-border);
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .playlist-item:hover {
+            background: var(--udemy-light-gray);
+        }
+
+        .playlist-item.active {
+            background: #f0ebff;
+            border-left: 3px solid var(--udemy-primary);
+        }
+
+        .playlist-thumbnail {
+            width: 60px;
+            height: 34px;
+            background: #000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .playlist-info {
+            flex: 1;
+        }
+
+        .playlist-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--udemy-secondary);
+            margin: 0 0 4px 0;
+            line-height: 1.3;
+        }
+
+        .playlist-duration {
+            font-size: 11px;
+            color: var(--udemy-gray);
+        }
+
+        /* Quiz Interface */
+        .quiz-header {
+            background: white;
+            border-bottom: 1px solid var(--udemy-border);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .quiz-counter {
+            font-size: 14px;
+            color: var(--udemy-gray);
+        }
+
+        .quiz-progress-bar {
+            height: 8px;
+            background: #e6e8eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: var(--udemy-success);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--udemy-secondary);
+            margin: 0 0 24px 0;
+            line-height: 1.4;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid var(--udemy-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--udemy-primary);
+            background: #f8f9fa;
+        }
+
+        .quiz-option.selected {
+            background: #f0ebff;
+            border-color: var(--udemy-primary);
+        }
+
+        .quiz-option.correct {
+            background: #f0f8f0;
+            border-color: var(--udemy-success);
+        }
+
+        .quiz-option.incorrect {
+            background: #fff0f0;
+            border-color: #dc3545;
+        }
+
+        .option-letter {
+            width: 24px;
+            height: 24px;
+            background: var(--udemy-light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--udemy-text);
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--udemy-primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--udemy-text);
+        }
+
+        /* Bottom Navigation */
+        .udemy-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 390px;
+            max-width: 100%;
+            background: white;
+            border-top: 1px solid var(--udemy-border);
+            display: flex;
+            height: 60px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--udemy-gray);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--udemy-primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        /* Modal Styles */
+        .udemy-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--udemy-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--udemy-secondary);
+            margin: 0 0 8px 0;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            color: var(--udemy-gray);
+            margin: 0 0 24px 0;
+            line-height: 1.4;
+        }
+
+        /* Input Styles */
+        .udemy-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--udemy-border);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--udemy-text);
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .udemy-input:focus {
+            outline: none;
+            border-color: var(--udemy-primary);
+        }
+
+        .udemy-input:disabled {
+            background: var(--udemy-light-gray);
+            color: var(--udemy-gray);
+        }
+
+        /* Match Following Styles */
+        .match-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .match-column {
+            background: var(--udemy-light-gray);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .match-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            text-align: center;
+            color: var(--udemy-secondary);
+        }
+
+        .match-item {
+            background: white;
+            border: 1px solid var(--udemy-border);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .match-item:hover {
+            border-color: var(--udemy-primary);
+        }
+
+        .match-item.selected {
+            background: var(--udemy-primary);
+            border-color: var(--udemy-primary);
+            color: white;
+        }
+
+        .match-item.correct-match {
+            background: var(--udemy-success);
+            border-color: var(--udemy-success);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 390px) {
+            .app-container {
+                max-width: 100%;
+            }
+            .udemy-bottom-nav {
+                width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mt-4 { margin-top: 16px; }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--udemy-primary), var(--udemy-primary-dark));
+            color: white;
+            padding: 24px 16px;
+            margin: 0 -16px 24px -16px;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0 0 16px 0;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen">
+            <!-- Header -->
+            <div class="udemy-header">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="logo">IT Prep Hub</a>
+                    <button onclick="showProfile()" style="background: none; border: none; color: var(--udemy-gray); font-size: 20px;">
+                        <i class='bx bx-user'></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- Search Bar -->
+                <div class="udemy-search">
+                    <i class='bx bx-search' style="color: var(--udemy-gray);"></i>
+                    <input type="text" placeholder="Search for courses">
+                </div>
+
+                <!-- Hero Banner -->
+                <div class="hero-banner">
+                    <h1 class="hero-title">Learn IT Skills</h1>
+                    <p class="hero-subtitle">Master Information Technology with Maharashtra Board courses</p>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Courses</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">600+</div>
+                            <div class="stat-label">Questions</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">FREE</div>
+                            <div class="stat-label">Access</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="categories">
+                    <div class="category-chip active">All Courses</div>
+                    <div class="category-chip">Class 11</div>
+                    <div class="category-chip">Class 12</div>
+                    <div class="category-chip">Featured</div>
+                </div>
+
+                <!-- Featured Courses -->
+                <div class="section-header">
+                    <h2 class="section-title">Featured Courses</h2>
+                </div>
+
+                <div id="coursesContainer">
+                    <!-- Courses will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- My Learning Screen -->
+        <div id="myLearningScreen" class="screen hidden">
+            <div class="udemy-header">
+                <h1 style="font-size: 20px; font-weight: 700; margin: 0;">My Learning</h1>
+            </div>
+
+            <div class="content-area">
+                <div id="enrolledCoursesContainer">
+                    <!-- Enrolled courses -->
+                </div>
+
+                <div id="noCoursesMessage" class="hidden" style="text-align: center; padding: 60px 20px;">
+                    <div style="width: 80px; height: 80px; background: var(--udemy-light-gray); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <i class='bx bx-book' style="font-size: 32px; color: var(--udemy-gray);"></i>
+                    </div>
+                    <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px 0; color: var(--udemy-secondary);">Start Learning Today</h3>
+                    <p style="color: var(--udemy-gray); margin: 0 0 24px 0;">Enroll in courses and track your progress</p>
+                    <button onclick="showScreen('homeScreen')" class="udemy-btn">
+                        Browse Courses
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Preview Screen -->
+        <div id="coursePreviewScreen" class="screen hidden">
+            <div class="udemy-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="showScreen('homeScreen')" style="background: none; border: none; color: var(--udemy-gray); font-size: 20px;">
+                        <i class='bx bx-arrow-back'></i>
+                    </button>
+                    <h1 style="font-size: 18px; font-weight: 600; margin: 0;">Course Preview</h1>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="preview-card">
+                    <div class="preview-video" onclick="playPreviewVideo()">
+                        <div class="play-button">
+                            <i class='bx bx-play'></i>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h2 id="previewCourseTitle" class="course-title">Information Technology Class 11 Mastery</h2>
+                        <div class="course-instructor">By IT Prep Hub Team</div>
+                        
+                        <div class="course-stats">
+                            <div class="rating">
+                                <span>4.8</span>
+                                <div style="color: var(--udemy-rating);">★★★★★</div>
+                            </div>
+                            <div class="students">(2,145 students)</div>
+                        </div>
+
+                        <div style="margin: 16px 0;">
+                            <h4 style="font-size: 16px; font-weight: 600; margin: 0 0 12px 0;">What you'll learn</h4>
+                            <div style="display: grid; gap: 8px;">
+                                <div class="flex items-center gap-2">
+                                    <i class='bx bx-check' style="color: var(--udemy-success);"></i>
+                                    <span style="font-size: 14px;">Master IT fundamentals for Class 11</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class='bx bx-check' style="color: var(--udemy-success);"></i>
+                                    <span style="font-size: 14px;">Practice with 600+ questions</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class='bx bx-check' style="color: var(--udemy-success);"></i>
+                                    <span style="font-size: 14px;">Take mock tests with timer</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class='bx bx-check' style="color: var(--udemy-success);"></i>
+                                    <span style="font-size: 14px;">Watch comprehensive video lessons</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-price">
+                            <span class="current-price">Free</span>
+                            <span class="original-price">₹3,499</span>
+                        </div>
+                        
+                        <button onclick="enrollFromPreview()" class="udemy-btn" style="margin-top: 16px;">
+                            Enroll for Free
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Learning Screen -->
+        <div id="courseLearningScreen" class="screen hidden">
+            <div class="learning-header">
+                <div class="flex items-center gap-3 mb-2">
+                    <button onclick="goToMyLearning()" style="background: none; border: none; color: white; font-size: 20px;">
+                        <i class='bx bx-arrow-back'></i>
+                    </button>
+                    <div>
+                        <h1 id="learningCourseTitle" class="learning-title">Information Technology Class 11 Mastery</h1>
+                        <p id="learningCourseSubtitle" class="learning-subtitle">Complete IT Course</p>
+                    </div>
+                </div>
+                
+                <!-- Progress -->
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="courseProgressBar"></div>
+                    </div>
+                    <div class="progress-text" id="courseProgressText">0% complete</div>
+                </div>
+            </div>
+
+            <div class="course-tabs">
+                <div class="course-tab active" onclick="showCourseTab('curriculum')" data-tab="curriculum">Curriculum</div>
+                <div class="course-tab" onclick="showCourseTab('practice')" data-tab="practice">Practice</div>
+                <div class="course-tab" onclick="showCourseTab('mocktest')" data-tab="mocktest">Mock Tests</div>
+                <div class="course-tab" onclick="showCourseTab('resources')" data-tab="resources">Resources</div>
+            </div>
+
+            <!-- Curriculum Tab (Video Lessons) -->
+            <div id="curriculumTab" class="tab-content">
+                <div class="chapter-list">
+                    <div class="video-player">
+                        <iframe id="videoPlayer" width="100%" height="220" 
+                                src="https://www.youtube.com/embed/videoseries?list=PLWKjhJtqVAbnRT_hue-3zyiuIYj0OlpyG" 
+                                title="IT Class 11 Video Lessons" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <h3 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">Video Lessons</h3>
+                    
+                    <div class="video-playlist">
+                        <div class="playlist-item active" onclick="playVideo(0)">
+                            <div class="playlist-thumbnail">1</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Introduction to Information Technology</div>
+                                <div class="playlist-duration">12:45</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="playVideo(1)">
+                            <div class="playlist-thumbnail">2</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Computer Hardware Basics</div>
+                                <div class="playlist-duration">15:20</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="playVideo(2)">
+                            <div class="playlist-thumbnail">3</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Software Types and Applications</div>
+                                <div class="playlist-duration">18:30</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="playVideo(3)">
+                            <div class="playlist-thumbnail">4</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Database Management Systems</div>
+                                <div class="playlist-duration">22:15</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="playVideo(4)">
+                            <div class="playlist-thumbnail">5</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Web Development Fundamentals</div>
+                                <div class="playlist-duration">25:40</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="playVideo(5)">
+                            <div class="playlist-thumbnail">6</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">Cyber Security and Ethics</div>
+                                <div class="playlist-duration">20:10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Tab (Chapter Selection + Question Types) -->
+            <div id="practiceTab" class="tab-content hidden">
+                <div class="chapter-list">
+                    <div style="background: var(--udemy-light-gray); padding: 16px; border-radius: 8px; margin-bottom: 20px; text-center;">
+                        <h3 style="margin: 0 0 8px 0;">Practice by Chapter</h3>
+                        <p style="margin: 0; color: var(--udemy-gray); font-size: 14px;">Select a chapter to practice questions</p>
+                    </div>
+                    
+                    <div id="practiceChaptersContainer">
+                        <!-- Practice chapters will be loaded here -->
+                    </div>
+                    
+                    <div id="practiceTypesContainer" class="hidden">
+                        <div style="margin: 20px 0;">
+                            <button onclick="goBackToChapters()" class="udemy-btn udemy-btn-outline" style="margin-bottom: 16px;">
+                                ← Back to Chapters
+                            </button>
+                            <h3 id="selectedChapterTitle" style="margin: 0 0 16px 0;">Practice Questions</h3>
+                        </div>
+                        <!-- Practice types will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mock Tests Tab -->
+            <div id="mocktestTab" class="tab-content hidden">
+                <div class="chapter-list">
+                    <div style="background: linear-gradient(135deg, var(--udemy-rating), #d97706); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-center;">
+                        <h3 style="color: white; margin: 0 0 8px 0;">Mock Test Center</h3>
+                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">Test your knowledge with timed mock exams</p>
+                    </div>
+                    
+                    <div id="mockTestsContainer">
+                        <!-- Mock tests will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resourcesTab" class="tab-content hidden">
+                <div class="chapter-list">
+                    <div class="chapter-item">
+                        <div class="flex items-center gap-3">
+                            <div style="width: 40px; height: 40px; background: #dc3545; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class='bx bxs-file-pdf'></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="chapter-title">Complete Study Notes</div>
+                                <div class="chapter-meta">All chapters • PDF • 5.2 MB</div>
+                            </div>
+                        </div>
+                        <button onclick="downloadNotes()" class="udemy-btn mt-4">
+                            <i class='bx bx-download' style="margin-right: 8px;"></i>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="chapter-item">
+                        <div class="flex items-center gap-3">
+                            <div style="width: 40px; height: 40px; background: var(--udemy-success); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class='bx bx-medal'></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="chapter-title">Certificate of Completion</div>
+                                <div class="chapter-meta">Complete all chapters to unlock</div>
+                            </div>
+                        </div>
+                        <button class="udemy-btn udemy-btn-outline mt-4" disabled>
+                            <i class='bx bx-lock' style="margin-right: 8px;"></i>
+                            Locked
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="screen hidden">
+            <div class="quiz-header">
+                <div class="flex items-center justify-between">
+                    <button onclick="exitQuiz()" style="background: none; border: none; color: var(--udemy-gray); font-size: 20px;">
+                        <i class='bx bx-x'></i>
+                    </button>
+                    <div class="text-center">
+                        <div id="quizTitle" style="font-size: 16px; font-weight: 600; color: var(--udemy-secondary);">Quiz</div>
+                        <div id="quizProgress" class="quiz-counter">Question 1 of 10</div>
+                    </div>
+                    <div id="quizTimer" style="min-width: 64px; text-align: right; font-weight: 700; color: var(--udemy-secondary);">--:--</div>
+                </div>
+                
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quizProgressFill" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <div id="quizContainer">
+                    <!-- Quiz content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen hidden">
+            <div class="udemy-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="goToCourseLearning()" style="background: none; border: none; color: var(--udemy-gray); font-size: 20px;">
+                        <i class='bx bx-arrow-back'></i>
+                    </button>
+                    <h1 id="resultsTitleText" style="font-size: 18px; font-weight: 600; margin: 0;">Quiz Results</h1>
+                </div>
+            </div>
+
+            <div class="content-area" style="text-align: center; padding: 40px 16px;">
+                <div id="resultIcon" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                </div>
+                <h2 id="resultTitle" style="font-size: 24px; font-weight: 700; margin: 0 0 8px 0;">Excellent!</h2>
+                
+                <div style="background: white; border: 1px solid var(--udemy-border); border-radius: 8px; padding: 24px; margin: 24px 0;">
+                    <div style="font-size: 48px; font-weight: 800; margin-bottom: 8px; color: var(--udemy-primary);" id="finalScore">8/10</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--udemy-secondary);" id="finalGrade">Grade: A</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+                        <div>
+                            <div style="color: var(--udemy-success); font-weight: 700; font-size: 20px;" id="correctCount">8</div>
+                            <div style="font-size: 12px; color: var(--udemy-gray);">CORRECT</div>
+                        </div>
+                        <div>
+                            <div style="color: #dc3545; font-weight: 700; font-size: 20px;" id="incorrectCount">2</div>
+                            <div style="font-size: 12px; color: var(--udemy-gray);">INCORRECT</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--udemy-primary); font-weight: 700; font-size: 20px;" id="percentageScore">80%</div>
+                            <div style="font-size: 12px; color: var(--udemy-gray);">ACCURACY</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="retakeQuiz()" class="udemy-btn udemy-btn-outline" style="flex: 1;">
+                        Try Again
+                    </button>
+                    <button onclick="goToCourseLearning()" class="udemy-btn" style="flex: 1;">
+                        Continue Learning
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="udemy-bottom-nav">
+            <div class="nav-item active" onclick="showScreen('homeScreen')" data-screen="homeScreen">
+                <i class='bx bx-home'></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('myLearningScreen')" data-screen="myLearningScreen">
+                <i class='bx bx-play-circle'></i>
+                <span>My Learning</span>
+            </div>
+            <div class="nav-item" onclick="showWishlist()">
+                <i class='bx bx-heart'></i>
+                <span>Wishlist</span>
+            </div>
+            <div class="nav-item" onclick="showProfile()">
+                <i class='bx bx-user'></i>
+                <span>Account</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include question files -->
+    <script src="questions/mock_test_questions.js"></script>
+    <script>
+        // HTML escaping utility function
+        function escapeHtml(text) {
+            if (!text) return "";
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Global state variables
+        let currentCourse = null;
+        let currentChapter = null;
+        let currentQuizType = null;
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizStartTime = null;
+        let matchSelections = [];
+        let answerSubmitted = false;
+        let previewCourseId = null;
+        let currentMode = 'practice'; // 'practice' | 'mock'
+        let mockTimerInterval = null;
+        let mockTimeRemainingSec = 0;
+
+        // Sample YouTube video URLs - You can replace these with your actual video IDs
+        const videoUrls = [
+            "dQw4w9WgXcQ",
+            "jNQXAC9IVRw",
+            "y6120QOlsfU",
+            "kJQP7kiw5Fk",
+            "ZZ5LpwO-An4",
+            "fJ9rUzIMcZQ"
+        ];
+
+        // Combined Course Data Structure
+        const coursesData = {
+            'it_class11_mastery': {
+                id: 'it_class11_mastery',
+                title: 'Information Technology Class 11 Mastery',
+                subtitle: 'Complete IT Course for Class 11 Students',
+                instructor: 'IT Prep Hub Team',
+                rating: 4.8,
+                students: '2,145',
+                price: 'Free',
+                originalPrice: '₹3,499',
+                description: 'Master Information Technology fundamentals for Maharashtra Board Class 11 students. Combined course for both Commerce and Science streams.',
+                available: true,
+                enrolled: false,
+                chapters: [
+                    { id: 1, title: "Basics of Information Technology", duration: "2h 30m", completed: false },
+                    { id: 2, title: "Introduction to DBMS", duration: "3h 15m", completed: false },
+                    { id: 3, title: "Impressive Web Designing", duration: "4h 20m", completed: false },
+                    { id: 4, title: "Cyber Law", duration: "2h 45m", completed: false }
+                ]
+            },
+            'it_class12_advanced': {
+                id: 'it_class12_advanced',
+                title: 'Information Technology Class 12 Advanced',
+                subtitle: 'Advanced IT Concepts for Class 12',
+                instructor: 'IT Prep Hub Team',
+                rating: 4.6,
+                students: '1,543',
+                price: 'Coming Soon',
+                originalPrice: '₹4,999',
+                description: 'Advanced Information Technology course for Class 12 students preparing for board exams and beyond.',
+                available: false,
+                enrolled: false,
+                chapters: []
+            }
+        };
+
+        // Course data management functions
+        function loadCoursesData() {
+            try {
+                const saved = localStorage.getItem('itPrepCourses');
+                if (saved) {
+                    const savedCourses = JSON.parse(saved);
+                    Object.keys(savedCourses).forEach(courseId => {
+                        if (coursesData[courseId]) {
+                            coursesData[courseId] = { ...coursesData[courseId], ...savedCourses[courseId] };
+                        }
+                    });
+                }
+            } catch (e) {
+                console.warn('Failed to load courses data:', e);
+            }
+        }
+
+        function saveCoursesData() {
+            try {
+                localStorage.setItem('itPrepCourses', JSON.stringify(coursesData));
+            } catch (e) {
+                console.warn('Failed to save courses data:', e);
+            }
+        }
+
+        // Display functions with Udemy styling
+        function loadCourses() {
+            const container = document.getElementById('coursesContainer');
+            container.innerHTML = '';
+
+            Object.values(coursesData).forEach((course, index) => {
+                const enrolled = course.enrolled;
+                const available = course.available;
+                const completed = course.chapters.filter(ch => ch.completed).length;
+                const total = course.chapters.length;
+                const progress = total > 0 ? (completed / total) * 100 : 0;
+
+                const div = document.createElement('div');
+                div.className = 'udemy-course-card fade-in';
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.onclick = () => available ? (enrolled ? openCourse(course.id) : showCoursePreview(course.id)) : null;
+                
+                div.innerHTML = `
+                    <div class="course-image">
+                        <i class='bx bx-code-alt'></i>
+                        <div class="course-badge">${enrolled ? 'Enrolled' : available ? 'Free' : 'Soon'}</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">${course.title}</h3>
+                        <div class="course-instructor">By ${course.instructor}</div>
+                        
+                        <div class="course-stats">
+                            <div class="rating">
+                                <span>${course.rating}</span>
+                                <div style="color: var(--udemy-rating);">★★★★★</div>
+                            </div>
+                            <div class="students">(${course.students} students)</div>
+                        </div>
+                        
+                        ${enrolled ? `
+                            <div class="progress-section">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                </div>
+                                <div class="progress-text">${Math.round(progress)}% complete • ${completed}/${total} chapters</div>
+                            </div>
+                        ` : `
+                            <div class="course-price">
+                                <span class="current-price">${course.price}</span>
+                                ${course.originalPrice ? `<span class="original-price">${course.originalPrice}</span>` : ''}
+                            </div>
+                        `}
+                        
+                        <button class="udemy-btn ${enrolled ? 'udemy-btn-success' : available ? '' : 'udemy-btn-outline'}" 
+                                ${!available ? 'disabled' : ''}>
+                            ${enrolled ? 'Continue Learning' : available ? 'View Course' : 'Coming Soon'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadEnrolledCourses() {
+            const container = document.getElementById('enrolledCoursesContainer');
+            const noCoursesMessage = document.getElementById('noCoursesMessage');
+            
+            const enrolledCourses = Object.values(coursesData).filter(course => course.enrolled);
+            
+            if (enrolledCourses.length === 0) {
+                container.innerHTML = '';
+                noCoursesMessage.classList.remove('hidden');
+                return;
+            }
+
+            noCoursesMessage.classList.add('hidden');
+            container.innerHTML = '';
+
+            enrolledCourses.forEach((course, index) => {
+                const completed = course.chapters.filter(ch => ch.completed).length;
+                const total = course.chapters.length;
+                const progress = total > 0 ? (completed / total) * 100 : 0;
+
+                const div = document.createElement('div');
+                div.className = 'udemy-course-card fade-in';
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.onclick = () => openCourse(course.id);
+                
+                div.innerHTML = `
+                    <div class="course-image">
+                        <i class='bx bx-code-alt'></i>
+                        <div class="course-badge">Enrolled</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">${course.title}</h3>
+                        <div class="course-instructor">By ${course.instructor}</div>
+                        
+                        <div class="progress-section">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="progress-text">${Math.round(progress)}% complete • ${completed}/${total} chapters</div>
+                        </div>
+                        
+                        <button class="udemy-btn udemy-btn-success">
+                            Continue Learning
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Course functions
+        function showCoursePreview(courseId) {
+            previewCourseId = courseId;
+            const course = coursesData[courseId];
+            document.getElementById('previewCourseTitle').textContent = course.title;
+            showScreen('coursePreviewScreen');
+        }
+
+        function playPreviewVideo() {
+            showUdemyModal('Preview Video', 'This is a sample preview. In the actual implementation, you would play a course preview video here.');
+        }
+
+        function enrollFromPreview() {
+            if (previewCourseId) {
+                enrollCourse(previewCourseId);
+            }
+        }
+
+        function enrollCourse(courseId) {
+            if (coursesData[courseId] && coursesData[courseId].available) {
+                coursesData[courseId].enrolled = true;
+                saveCoursesData();
+                loadCourses();
+                loadEnrolledCourses();
+                showUdemyModal('Enrollment Successful!', `Welcome to ${coursesData[courseId].title}! Start learning now and master IT skills.`);
+            }
+        }
+
+        function openCourse(courseId) {
+            currentCourse = coursesData[courseId];
+            if (currentCourse) {
+                document.getElementById('learningCourseTitle').textContent = currentCourse.title;
+                document.getElementById('learningCourseSubtitle').textContent = currentCourse.subtitle;
+                loadCourseContent();
+                showScreen('courseLearningScreen');
+                showCourseTab('curriculum');
+            }
+        }
+
+        function loadCourseContent() {
+            if (!currentCourse) return;
+            
+            loadPracticeChapters();
+            loadMockTests();
+            updateCourseProgress();
+        }
+
+        function updateCourseProgress() {
+            if (!currentCourse) return;
+            
+            const completed = currentCourse.chapters.filter(ch => ch.completed).length;
+            const total = currentCourse.chapters.length;
+            const progress = total > 0 ? (completed / total) * 100 : 0;
+            
+            document.getElementById('courseProgressBar').style.width = `${progress}%`;
+            document.getElementById('courseProgressText').textContent = `${Math.round(progress)}% complete`;
+        }
+
+        // Video playlist functions
+        function playVideo(index) {
+            document.querySelectorAll('.playlist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.playlist-item')[index].classList.add('active');
+            
+            const videoId = videoUrls[index];
+            document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        }
+
+        // Practice chapter functions
+        function loadPracticeChapters() {
+            const container = document.getElementById('practiceChaptersContainer');
+            container.innerHTML = '';
+
+            currentCourse.chapters.forEach((chapter, index) => {
+                const div = document.createElement('div');
+                div.className = 'chapter-item fade-in';
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.onclick = () => selectPracticeChapter(chapter);
+                
+                div.innerHTML = `
+                    <div class="chapter-header">
+                        <div class="chapter-number ${chapter.completed ? 'completed' : ''}">
+                            ${chapter.completed ? '✓' : index + 1}
+                        </div>
+                        <div class="chapter-info">
+                            <div class="chapter-title">Chapter ${chapter.id}: ${chapter.title}</div>
+                            <div class="chapter-meta">7 question types • Practice & Mock tests</div>
+                        </div>
+                        <i class='bx bx-chevron-right' style="color: var(--udemy-gray);"></i>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectPracticeChapter(chapter) {
+            currentChapter = chapter;
+            document.getElementById('selectedChapterTitle').textContent = `Chapter ${chapter.id}: ${chapter.title}`;
+            document.getElementById('practiceChaptersContainer').classList.add('hidden');
+            document.getElementById('practiceTypesContainer').classList.remove('hidden');
+            loadPracticeTypes();
+        }
+
+        function goBackToChapters() {
+            document.getElementById('practiceChaptersContainer').classList.remove('hidden');
+            document.getElementById('practiceTypesContainer').classList.add('hidden');
+            currentChapter = null;
+        }
+
+        function loadPracticeTypes() {
+            if (!currentChapter) return;
+            
+            const container = document.getElementById('practiceTypesContainer');
+            
+            const existingContent = container.querySelector('.practice-types-list');
+            if (existingContent) {
+                existingContent.remove();
+            }
+
+            const practiceContainer = document.createElement('div');
+            practiceContainer.className = 'practice-types-list';
+
+            const practiceTypes = [
+                { id: 'fill-blanks', title: 'Fill in the Blanks', icon: 'bx-edit-alt', color: 'var(--udemy-primary)' },
+                { id: 'true-false', title: 'True or False', icon: 'bx-check-circle', color: 'var(--udemy-success)' },
+                { id: 'mcq-single', title: 'Multiple Choice - Single', icon: 'bx-radio-circle', color: '#8b5cf6' },
+                { id: 'mcq-two', title: 'Multiple Choice - Two Answers', icon: 'bx-checkbox', color: 'var(--udemy-rating)' },
+                { id: 'mcq-three', title: 'Multiple Choice - Three Answers', icon: 'bx-check-square', color: '#dc3545' },
+                { id: 'match-following', title: 'Match the Following', icon: 'bx-link', color: '#06b6d4' }
+            ];
+
+            practiceTypes.forEach((type, index) => {
+                const div = document.createElement('div');
+                div.className = 'chapter-item fade-in';
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.onclick = () => startPractice(type.id);
+                
+                div.innerHTML = `
+                    <div class="chapter-header">
+                        <div style="width: 32px; height: 32px; background: ${type.color}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class='bx ${type.icon}'></i>
+                        </div>
+                        <div class="chapter-info">
+                            <div class="chapter-title">${type.title}</div>
+                            <div class="chapter-meta">Interactive quiz • <span id="count-${type.id}">0</span> questions</div>
+                        </div>
+                        <i class='bx bx-chevron-right' style="color: var(--udemy-gray);"></i>
+                    </div>
+                `;
+                practiceContainer.appendChild(div);
+            });
+
+            container.appendChild(practiceContainer);
+        }
+
+        // Mock test functions
+        function loadMockTests() {
+            const container = document.getElementById('mockTestsContainer');
+            container.innerHTML = '';
+
+            currentCourse.chapters.forEach((chapter, index) => {
+                const mockTestKey = `${currentCourse.id}_${chapter.id}`;
+                const lastScore = getMockTestScore(mockTestKey);
+                
+                const div = document.createElement('div');
+                div.className = 'mock-test-card fade-in';
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    startMockTest(chapter);
+                };
+                
+                div.innerHTML = `
+                    ${lastScore !== null ? `<div class="mock-score-badge ${lastScore >= 70 ? 'completed' : ''}">${lastScore}%</div>` : ''}
+                    <div class="mock-test-header">
+                        <div class="mock-test-icon">
+                            <i class='bx bx-time'></i>
+                        </div>
+                        <div class="mock-test-info">
+                            <div class="mock-test-title">Chapter ${chapter.id} Mock Test</div>
+                            <div class="mock-test-details">${chapter.title}</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--udemy-gray); margin-bottom: 12px;">
+                        <div>📝 26 Questions</div>
+                        <div>⏰ 25 Minutes</div>
+                        <div>🎯 Pass Score: 70%</div>
+                    </div>
+                    <button class="udemy-btn udemy-btn-outline" style="background: var(--udemy-rating); color: white; border: none;">
+                        ${lastScore !== null ? 'Retake Test' : 'Start Test'}
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function getMockTestScore(testKey) {
+            try {
+                const saved = localStorage.getItem(`mockResult_${testKey}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    return data.score;
+                }
+            } catch (e) {
+                console.warn('Failed to load mock test score');
+            }
+            return null;
+        }
+
+        function startMockTest(chapter) {
+            if (!currentCourse) return;
+            currentChapter = chapter;
+            currentMode = 'mock';
+
+            // Prefer dedicated mock test questions if present
+            const mockKey = `${currentCourse.id}_${chapter.id}`;
+            let questions = (window.mock_tests && window.mock_tests[mockKey]) ? [...window.mock_tests[mockKey]] : [];
+
+            // Fallback: if no dedicated set, try to build a mixed set from available pools on window
+            if (questions.length === 0 && window.mock_pool && Array.isArray(window.mock_pool)) {
+                questions = [...window.mock_pool];
+            }
+
+            // Ensure we have up to 26 questions
+            shuffleArray(questions);
+            if (questions.length > 26) {
+                questions = questions.slice(0, 26);
+            }
+
+            if (questions.length === 0) {
+                showUdemyModal('Mock Test', 'Questions are not available yet for this chapter.');
+                return;
+            }
+
+            // Initialize quiz state
+            currentQuizType = 'mcq-single'; // used for labels; each question carries its own type
+            currentQuiz = questions;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            matchSelections = [];
+            answerSubmitted = false;
+            quizStartTime = Date.now();
+
+            // Start timer: 25 minutes
+            mockTimeRemainingSec = 25 * 60;
+            startMockTimer();
+
+            showScreen('quizScreen');
+            loadQuizQuestion();
+        }
+
+        function startMockTimer() {
+            updateTimerDisplay();
+            if (mockTimerInterval) clearInterval(mockTimerInterval);
+            mockTimerInterval = setInterval(() => {
+                mockTimeRemainingSec--;
+                updateTimerDisplay();
+                if (mockTimeRemainingSec <= 0) {
+                    clearInterval(mockTimerInterval);
+                    mockTimerInterval = null;
+                    // Auto-finish
+                    showQuizResults();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('quizTimer');
+            if (!timerEl) return;
+            if (currentMode !== 'mock') {
+                timerEl.textContent = '--:--';
+                return;
+            }
+            const m = Math.max(0, Math.floor(mockTimeRemainingSec / 60));
+            const s = Math.max(0, mockTimeRemainingSec % 60);
+            timerEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            timerEl.style.color = mockTimeRemainingSec <= 60 ? '#dc2626' : 'var(--udemy-secondary)';
+        }
+
+        // Practice functions
+        function startPractice(type) {
+            if (!currentChapter) {
+                showUdemyModal('Select Chapter', 'Please select a chapter first to start practice.');
+                return;
+            }
+
+            currentMode = 'practice';
+            clearMockTimer();
+
+            let questions = [];
+            const pools = window.practice_pools || {};
+            const chapterKey = `ch_${currentChapter.id}`;
+            const typeKey = type;
+            if (pools[chapterKey] && pools[chapterKey][typeKey]) {
+                questions = pools[chapterKey][typeKey];
+            }
+
+            if (!questions || questions.length === 0) {
+                showUdemyModal('Coming Soon!', 'Questions for this type are being prepared. Check back soon!');
+                return;
+            }
+
+            currentQuizType = type;
+            currentQuiz = questions;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            matchSelections = [];
+            answerSubmitted = false;
+            showScreen('quizScreen');
+            loadQuizQuestion();
+        }
+
+        function clearMockTimer() {
+            if (mockTimerInterval) {
+                clearInterval(mockTimerInterval);
+                mockTimerInterval = null;
+            }
+            mockTimeRemainingSec = 0;
+            updateTimerDisplay();
+        }
+
+        // Quiz functions
+        function loadQuizQuestion() {
+            if (!currentQuiz || currentQuestionIndex >= currentQuiz.length) return;
+            
+            const question = currentQuiz[currentQuestionIndex];
+            const container = document.getElementById('quizContainer');
+            answerSubmitted = false;
+            
+            document.getElementById('quizTitle').textContent = currentMode === 'mock' ? 'Mock Test' : getQuizTypeTitle(currentQuizType);
+            document.getElementById('quizProgress').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuiz.length}`;
+            updateTimerDisplay();
+            
+            const progressPercent = ((currentQuestionIndex + 1) / currentQuiz.length) * 100;
+            document.getElementById('quizProgressFill').style.width = `${progressPercent}%`;
+            
+            let questionHTML = `
+                <div class="quiz-question">${escapeHtml(question.question)}</div>
+                <div id="optionsContainer">
+            `;
+
+            const type = question.type || currentQuizType;
+
+            if (type === 'fill-blanks') {
+                questionHTML += `
+                    <input type="text" id="fillBlankAnswer" class="udemy-input" placeholder="Type your answer here..." style="margin-bottom: 24px;">
+                `;
+            } else if (type === 'true-false') {
+                questionHTML += `
+                    <div class="quiz-option" onclick="selectOption(this, 'True')">
+                        <div class="option-letter">T</div>
+                        <div class="option-text">True</div>
+                    </div>
+                    <div class="quiz-option" onclick="selectOption(this, 'False')">
+                        <div class="option-letter">F</div>
+                        <div class="option-text">False</div>
+                    </div>
+                `;
+            } else if (type === 'match-following') {
+                questionHTML += `
+                    <div class="match-container">
+                        <div class="match-column">
+                            <h4>Column A</h4>
+                `;
+                if (question.columnA && Array.isArray(question.columnA)) {
+                    question.columnA.forEach((item, index) => {
+                        questionHTML += `
+                            <div class="match-item" data-column="A" data-index="${index}" onclick="selectMatchItem(this, 'A', ${index}, '${escapeHtml(item)}')">
+                                ${escapeHtml(item)}
+                            </div>
+                        `;
+                    });
+                }
+                questionHTML += `
+                        </div>
+                        <div class="match-column">
+                            <h4>Column B</h4>
+                `;
+                if (question.columnB && Array.isArray(question.columnB)) {
+                    question.columnB.forEach((item, index) => {
+                        questionHTML += `
+                            <div class="match-item" data-column="B" data-index="${index}" onclick="selectMatchItem(this, 'B', ${index}, '${escapeHtml(item)}')">
+                                ${escapeHtml(item)}
+                            </div>
+                        `;
+                    });
+                }
+                questionHTML += `
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 16px; background: var(--udemy-light-gray); border-radius: 8px; min-height: 60px;" id="matchesDisplay">
+                        <div style="color: var(--udemy-gray); font-size: 14px; text-align: center;">Select items from both columns to match</div>
+                    </div>
+                `;
+            } else {
+                if (question.options && Array.isArray(question.options)) {
+                    question.options.forEach((option, index) => {
+                        const letter = String.fromCharCode(65 + index);
+                        questionHTML += `
+                            <div class="quiz-option" onclick="selectOption(this, '${escapeHtml(option)}')">
+                                <div class="option-letter">${letter}</div>
+                                <div class="option-text">${escapeHtml(option)}</div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            questionHTML += `
+                </div>
+                <button id="submitAnswer" onclick="submitAnswer()" class="udemy-btn" style="opacity: 0.5; margin-top: 32px;" disabled>
+                    Submit Answer
+                </button>
+            `;
+
+            container.innerHTML = questionHTML;
+
+            if (type === 'match-following') {
+                matchSelections = [];
+            }
+        }
+
+        function selectOption(element, value) {
+            if (answerSubmitted) return;
+
+            const question = currentQuiz[currentQuestionIndex];
+            const type = question.type || currentQuizType;
+
+            if (type === 'mcq-two' || type === 'mcq-three') {
+                element.classList.toggle('selected');
+                const maxSelections = type === 'mcq-two' ? 2 : 3;
+                const selectedCount = document.querySelectorAll('.quiz-option.selected').length;
+                
+                if (selectedCount > maxSelections) {
+                    element.classList.remove('selected');
+                    return;
+                }
+            } else {
+                document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+            }
+
+            updateSubmitButton();
+        }
+
+        function selectMatchItem(element, column, index, value) {
+            if (answerSubmitted) return;
+
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                matchSelections = matchSelections.filter(s => !(s.column === column && s.index === index));
+            } else {
+                element.classList.add('selected');
+                matchSelections.push({ column, index, value });
+            }
+
+            updateMatchDisplay();
+            updateSubmitButton();
+        }
+
+        function updateMatchDisplay() {
+            const display = document.getElementById('matchesDisplay');
+            if (!display) return;
+
+            if (matchSelections.length === 0) {
+                display.innerHTML = '<div style="color: var(--udemy-gray); font-size: 14px; text-align: center;">Select items from both columns to match</div>';
+                return;
+            }
+
+            const columnA = matchSelections.filter(s => s.column === 'A');
+            const columnB = matchSelections.filter(s => s.column === 'B');
+            
+            let html = '';
+            const maxPairs = Math.min(columnA.length, columnB.length);
+            
+            for (let i = 0; i < maxPairs; i++) {
+                html += `
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: white; padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; border: 1px solid var(--udemy-border);">
+                        <span style="font-size: 13px;">${escapeHtml(columnA[i].value)}</span>
+                        <i class='bx bx-right-arrow-alt' style="color: var(--udemy-primary);"></i>
+                        <span style="font-size: 13px;">${escapeHtml(columnB[i].value)}</span>
+                    </div>
+                `;
+            }
+            
+            display.innerHTML = html || '<div style="color: var(--udemy-gray); font-size: 14px; text-align: center;">Select items from both columns to match</div>';
+        }
+
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitAnswer');
+            if (!submitBtn) return;
+
+            let hasAnswer = false;
+            const question = currentQuiz[currentQuestionIndex];
+            const type = question.type || currentQuizType;
+            
+            if (type === 'fill-blanks') {
+                hasAnswer = document.getElementById('fillBlankAnswer')?.value.trim();
+            } else if (type === 'match-following') {
+                const columnA = matchSelections.filter(s => s.column === 'A');
+                const columnB = matchSelections.filter(s => s.column === 'B');
+                hasAnswer = columnA.length > 0 && columnB.length > 0;
+            } else {
+                hasAnswer = document.querySelector('.quiz-option.selected');
+            }
+
+            if (hasAnswer) {
+                submitBtn.style.opacity = '1';
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.style.opacity = '0.5';
+                submitBtn.disabled = true;
+            }
+        }
+
+        function submitAnswer() {
+            if (answerSubmitted) return;
+            answerSubmitted = true;
+
+            const question = currentQuiz[currentQuestionIndex];
+            const type = question.type || currentQuizType;
+            let userAnswer = null;
+            let isCorrect = false;
+
+            if (type === 'fill-blanks') {
+                userAnswer = document.getElementById('fillBlankAnswer').value.trim();
+                isCorrect = userAnswer.toLowerCase() === question.correct.toLowerCase().trim();
+            } else if (type === 'true-false') {
+                const selected = document.querySelector('.quiz-option.selected');
+                if (selected) {
+                    userAnswer = selected.querySelector('.option-text').textContent.trim();
+                    isCorrect = userAnswer === question.correct;
+                }
+            } else if (type === 'match-following') {
+                const columnA = matchSelections.filter(s => s.column === 'A');
+                const columnB = matchSelections.filter(s => s.column === 'B');
+                
+                userAnswer = [];
+                const maxPairs = Math.min(columnA.length, columnB.length);
+                
+                for (let i = 0; i < maxPairs; i++) {
+                    userAnswer.push([columnA[i].value, columnB[i].value]);
+                }
+                
+                let correctMatches = 0;
+                if (userAnswer.length > 0) {
+                    userAnswer.forEach(pair => {
+                        if (question.correct[pair[0]] && question.correct[pair[0]].toLowerCase().trim() === pair[1].toLowerCase().trim()) {
+                            correctMatches++;
+                        }
+                    });
+                }
+                
+                isCorrect = correctMatches === Object.keys(question.correct).length && 
+                           userAnswer.length === Object.keys(question.correct).length;
+            } else {
+                const selected = document.querySelectorAll('.quiz-option.selected');
+                userAnswer = Array.from(selected).map(el => el.querySelector('.option-text').textContent.trim());
+                
+                if (type === 'mcq-single') {
+                    isCorrect = userAnswer[0] === question.correct;
+                } else {
+                    const correctCount = userAnswer.filter(ans => 
+                        Array.isArray(question.correct) ? question.correct.includes(ans) : ans === question.correct
+                    ).length;
+                    const expectedLength = Array.isArray(question.correct) ? question.correct.length : 1;
+                    isCorrect = correctCount === expectedLength && userAnswer.length === expectedLength;
+                }
+            }
+
+            userAnswers.push({
+                question: question.question,
+                userAnswer: userAnswer,
+                correctAnswer: question.correct,
+                isCorrect: isCorrect,
+                explanation: question.explanation || ''
+            });
+
+            showAnswerFeedback(isCorrect, question.correct, question.explanation, type);
+        }
+
+        function showAnswerFeedback(isCorrect, correctAnswer, explanation, typeOverride) {
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.style.pointerEvents = 'none';
+                
+                const type = typeOverride || currentQuiz[currentQuestionIndex]?.type || currentQuizType;
+                if (type === 'true-false') {
+                    const optionText = option.querySelector('.option-text').textContent.trim();
+                    if (optionText === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                } else if (type !== 'fill-blanks' && type !== 'match-following') {
+                    const optionText = option.querySelector('.option-text').textContent.trim();
+                    const isCorrectOption = Array.isArray(correctAnswer) ? 
+                        correctAnswer.includes(optionText) : optionText === correctAnswer;
+                    
+                    if (isCorrectOption) {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                }
+            });
+
+            if ((typeOverride || currentQuiz[currentQuestionIndex]?.type || currentQuizType) === 'match-following') {
+                document.querySelectorAll('.match-item').forEach(item => {
+                    const column = item.dataset.column;
+                    const value = item.textContent.trim();
+                    
+                    let isCorrectMatch = false;
+                    if (column === 'A' && correctAnswer[value]) {
+                        isCorrectMatch = true;
+                    } else if (column === 'B') {
+                        isCorrectMatch = Object.values(correctAnswer).includes(value);
+                    }
+                    
+                    if (isCorrectMatch) {
+                        item.classList.add('correct-match');
+                    }
+                    item.style.pointerEvents = 'none';
+                });
+            }
+
+            const fillInput = document.getElementById('fillBlankAnswer');
+            if (fillInput) {
+                fillInput.disabled = true;
+                fillInput.style.background = isCorrect ? '#f0f8f0' : '#fff0f0';
+                fillInput.style.borderColor = isCorrect ? 'var(--udemy-success)' : '#dc3545';
+            }
+
+            let correctAnswerDisplay = '';
+            const type = typeOverride || currentQuiz[currentQuestionIndex]?.type || currentQuizType;
+            if (type === 'match-following') {
+                correctAnswerDisplay = Object.entries(correctAnswer)
+                    .map(([key, value]) => `${escapeHtml(key)} → ${escapeHtml(value)}`)
+                    .join('<br>');
+            } else {
+                correctAnswerDisplay = Array.isArray(correctAnswer) ? 
+                    correctAnswer.map(ans => escapeHtml(ans)).join(', ') : escapeHtml(correctAnswer);
+            }
+
+            const feedbackHTML = `
+                <div style="background: white; border: 2px solid ${isCorrect ? 'var(--udemy-success)' : '#dc3545'}; border-radius: 8px; padding: 20px; margin-top: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: ${isCorrect ? 'var(--udemy-success)' : '#dc3545'}; color: white;">
+                            <i class='bx ${isCorrect ? 'bx-check' : 'bx-x'}' style="font-size: 20px;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; font-size: 18px; font-weight: 600; color: ${isCorrect ? 'var(--udemy-success)' : '#dc3545'};">${isCorrect ? 'Correct!' : 'Incorrect'}</h4>
+                            <p style="margin: 0; font-size: 14px; color: var(--udemy-gray);">${isCorrect ? 'Well done!' : 'Keep practicing!'}</p>
+                        </div>
+                    </div>
+                    
+                    ${!isCorrect ? `
+                        <div style=\"background: #f0f8f0; border: 1px solid var(--udemy-success); border-radius: 8px; padding: 12px; margin-bottom: 16px;\">
+                            <p style=\"margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: var(--udemy-success);\">Correct Answer:</p>
+                            <div style=\"font-size: 14px; color: var(--udemy-success);\">${correctAnswerDisplay}</div>
+                        </div>
+                    ` : ''}
+                    
+                    ${explanation ? `
+                        <div style=\"background: var(--udemy-light-gray); border: 1px solid var(--udemy-border); border-radius: 8px; padding: 12px; margin-bottom: 16px;\">
+                            <p style=\"margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: var(--udemy-text);\">Explanation:</p>
+                            <div style=\"font-size: 14px; color: var(--udemy-text);\">${escapeHtml(explanation)}...</div>
+                        </div>
+                    ` : ''}
+                    
+                    <button onclick="nextQuestion()" class="udemy-btn udemy-btn-success">
+                        ${currentQuestionIndex < currentQuiz.length - 1 ? 'Next Question' : 'View Results'}
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('quizContainer').innerHTML += feedbackHTML;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= currentQuiz.length) {
+                showQuizResults();
+            } else {
+                loadQuizQuestion();
+            }
+        }
+
+        function showQuizResults() {
+            // Stop timer if mock
+            if (currentMode === 'mock') {
+                clearMockTimer();
+            }
+
+            const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+            const totalQuestions = userAnswers.length;
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            
+            let grade = 'F';
+            if (percentage >= 90) grade = 'A+';
+            else if (percentage >= 80) grade = 'A';
+            else if (percentage >= 70) grade = 'B';
+            else if (percentage >= 60) grade = 'C';
+            else if (percentage >= 50) grade = 'D';
+            
+            document.getElementById('finalScore').textContent = `${correctAnswers}/${totalQuestions}`;
+            document.getElementById('finalGrade').textContent = `Grade: ${grade}`;
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('incorrectCount').textContent = totalQuestions - correctAnswers;
+            document.getElementById('percentageScore').textContent = `${percentage}%`;
+            
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultsTitleText = document.getElementById('resultsTitleText');
+            resultsTitleText.textContent = currentMode === 'mock' ? 'Mock Test Results' : 'Quiz Results';
+            
+            if (percentage >= 80) {
+                resultIcon.style.background = 'var(--udemy-success)';
+                resultIcon.innerHTML = '<i class="bx bx-trophy" style="font-size: 32px; color: white;"></i>';
+                resultTitle.textContent = 'Excellent!';
+            } else if (percentage >= 60) {
+                resultIcon.style.background = 'var(--udemy-primary)';
+                resultIcon.innerHTML = '<i class="bx bx-medal" style="font-size: 32px; color: white;"></i>';
+                resultTitle.textContent = 'Good Job!';
+            } else {
+                resultIcon.style.background = 'var(--udemy-rating)';
+                resultIcon.innerHTML = '<i class="bx bx-book" style="font-size: 32px; color: white;"></i>';
+                resultTitle.textContent = 'Keep Learning!';
+            }
+            
+            // Save result and mark chapter complete if score is good
+            if (currentMode === 'mock' && currentCourse && currentChapter) {
+                try {
+                    const key = `mockResult_${currentCourse.id}_${currentChapter.id}`;
+                    localStorage.setItem(key, JSON.stringify({
+                        score: percentage,
+                        correct: correctAnswers,
+                        total: totalQuestions,
+                        completedAt: new Date().toISOString()
+                    }));
+                } catch (e) {}
+                loadMockTests();
+            }
+
+            if (percentage >= 70) {
+                markChapterCompleted();
+            }
+            
+            showScreen('resultsScreen');
+        }
+
+        function markChapterCompleted() {
+            if (!currentCourse || !currentChapter) return;
+            
+            const chapterIndex = currentCourse.chapters.findIndex(ch => ch.id === currentChapter.id);
+            if (chapterIndex !== -1) {
+                currentCourse.chapters[chapterIndex].completed = true;
+                coursesData[currentCourse.id] = currentCourse;
+                saveCoursesData();
+                updateCourseProgress();
+                loadPracticeChapters();
+                loadMockTests();
+            }
+        }
+
+        // Helper functions
+        function getQuizTypeTitle(type) {
+            const titles = {
+                'fill-blanks': 'Fill in the Blanks',
+                'true-false': 'True or False',
+                'mcq-single': 'Multiple Choice',
+                'mcq-two': 'Multiple Choice - Two Answers',
+                'mcq-three': 'Multiple Choice - Three Answers',
+                'match-following': 'Match the Following'
+            };
+            return titles[type] || 'Quiz';
+        }
+
+        function retakeQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            answerSubmitted = false;
+            matchSelections = [];
+            if (currentMode === 'mock') {
+                // restart timer
+                mockTimeRemainingSec = 25 * 60;
+                startMockTimer();
+            }
+            loadQuizQuestion();
+        }
+
+        function exitQuiz() {
+            if (confirm('Exit? Your progress will be lost.')) {
+                if (currentMode === 'mock') {
+                    clearMockTimer();
+                }
+                goToCourseLearning();
+            }
+        }
+
+        function showScreen(screenId) {
+            const screens = ['homeScreen', 'myLearningScreen', 'coursePreviewScreen', 'courseLearningScreen', 'quizScreen', 'resultsScreen'];
+            
+            screens.forEach(id => {
+                const element = document.getElementById(id);
+                if (id === screenId) {
+                    element.classList.remove('hidden');
+                    element.classList.add('slide-in');
+                    setTimeout(() => element.classList.remove('slide-in'), 400);
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.screen === screenId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            if (screenId === 'homeScreen') {
+                loadCourses();
+            } else if (screenId === 'myLearningScreen') {
+                loadEnrolledCourses();
+            }
+        }
+
+        function goToCourseLearning() {
+            if (currentCourse) {
+                showScreen('courseLearningScreen');
+            } else {
+                showScreen('myLearningScreen');
+            }
+        }
+
+        function goToMyLearning() {
+            showScreen('myLearningScreen');
+        }
+
+        function downloadNotes() {
+            const btn = event.target;
+            const original = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="bx bx-loader-alt bx-spin" style="margin-right: 8px;"></i>Downloading...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bx bx-check" style="margin-right: 8px;"></i>Downloaded!';
+                btn.className = 'udemy-btn udemy-btn-success';
+                
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.disabled = false;
+                    btn.className = 'udemy-btn';
+                }, 2000);
+            }, 1500);
+        }
+
+        function showUdemyModal(title, message) {
+            const modal = document.createElement('div');
+            modal.className = 'udemy-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-icon">
+                        <i class='bx bx-info-circle'></i>
+                    </div>
+                    <h3 class="modal-title">${title}</h3>
+                    <p class="modal-text">${message}</p>
+                    <button onclick="this.closest('.udemy-modal').remove()" class="udemy-btn">
+                        Got It!
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function showWishlist() {
+            showUdemyModal('Wishlist', 'Wishlist feature coming soon! Save your favorite courses for later.');
+        }
+
+        function showProfile() {
+            showUdemyModal('Account', 'Profile management features are coming soon. Track your learning progress and achievements.');
+        }
+
+        // Utils
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Event listeners
+        document.addEventListener('input', function(e) {
+            if (e.target.id === 'fillBlankAnswer' && !answerSubmitted) {
+                updateSubmitButton();
+            }
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCoursesData();
+            loadCourses();
+            
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.opacity = '1';
+                });
+            }, 100);
+        });
+
+        // Auto-save courses data
+        setInterval(saveCoursesData, 30000);
+    </script>
+</body>
+</html>
